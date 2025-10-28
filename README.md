@@ -27,7 +27,6 @@ Thank you for understanding!
    - 3.3 select an account
    - 3.4 change the value of isadmin to 1
  
-
 ## Screenshots
 **Customer**
 - Room pricing
