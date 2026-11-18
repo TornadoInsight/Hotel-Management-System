@@ -32,11 +32,12 @@ if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"][1] == "false
         if (!empty($errors_)) {
             echo $errors_;
         } else {
+            $sessionCustomer = (new CustomerHandler())->getCustomerObj($_SESSION["accountEmail"]);
             $c = new Customer();
-            $c->setId(Util::sanitize_xss($_POST["cid"]));
+            $c->setId($sessionCustomer->getId());
             $c->setFullName(Util::sanitize_xss($_POST["fullName"]));
             $c->setPhone(Util::sanitize_xss($_POST["phone"]));
-            $c->setEmail(Util::sanitize_xss($_POST["email"]));
+            $c->setEmail($sessionCustomer->getEmail());
             $c->setPassword(Util::sanitize_xss($pwd));
     
             if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"][1] == "false" &&
@@ -47,7 +48,7 @@ if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"][1] == "false
             }
             
             if (isset($_SESSION["username"])) {
-                $_SESSION["username"] = $cHandler->getUsername($_POST["email"]);
+                $_SESSION["username"] = $cHandler->getUsername($_SESSION["accountEmail"]);
             }
             if (isset($_SESSION["phoneNumber"])) {
                 $_SESSION["phoneNumber"] = $_POST["phone"];
